@@ -1,0 +1,1016 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ヨーロッパ旅行 2026 — ガントチャート</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Hiragino Kaku Gothic ProN', 'Segoe UI', sans-serif;
+    background: #f0f2f5;
+    color: #1a1a2e;
+    padding: 40px 24px;
+    min-height: 100vh;
+  }
+
+  .container {
+    max-width: 1100px;
+    margin: 0 auto;
+  }
+
+  /* Header */
+  header {
+    margin-bottom: 36px;
+  }
+
+  header h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    background: linear-gradient(135deg, #2563eb, #7c3aed, #db2777);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 6px;
+  }
+
+  header p {
+    font-size: 0.85rem;
+    color: #64748b;
+  }
+
+  /* Legend */
+  .legend {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+
+  .legend-dot {
+    width: 14px; height: 14px;
+    border-radius: 4px;
+  }
+
+  .c-kata { background: #ef4444; }
+  .c-tackle { background: #3b82f6; }
+  .c-chen { background: #22c55e; }
+  .c-all { background: linear-gradient(135deg, #ef4444, #3b82f6, #22c55e); }
+
+  /* Chart container */
+  .gantt-wrapper {
+    overflow-x: auto;
+    border-radius: 16px;
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+  }
+
+  .gantt {
+    min-width: 800px;
+    display: grid;
+    grid-template-columns: 140px repeat(10, 1fr);
+    grid-template-rows: auto;
+  }
+
+  /* Header row */
+  .gantt-head {
+    background: #f1f5f9;
+    padding: 14px 12px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-align: center;
+    border-bottom: 2px solid #e2e8f0;
+    color: #475569;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  .gantt-head:first-child {
+    text-align: left;
+    padding-left: 20px;
+    border-right: 1px solid #e2e8f0;
+  }
+
+  .gantt-head .day-name {
+    display: block;
+    font-size: 0.65rem;
+    color: #64748b;
+    margin-top: 2px;
+    text-transform: none;
+    letter-spacing: 0;
+  }
+
+  .gantt-head.merge-day {
+    background: #f5f0ff;
+    color: #7c3aed;
+  }
+
+  /* Row label */
+  .gantt-label {
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    border-right: 1px solid #e2e8f0;
+    border-bottom: 1px solid #e2e8f0;
+    background: #ffffff;
+    min-height: 72px;
+  }
+
+  .gantt-label .avatar {
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem;
+    font-weight: 800;
+    color: #fff;
+    flex-shrink: 0;
+  }
+
+  /* Cell */
+  .gantt-cell {
+    border-bottom: 1px solid #e2e8f0;
+    border-right: 1px solid rgba(226,232,240,0.8);
+    padding: 8px 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 72px;
+    position: relative;
+  }
+
+  .gantt-cell:last-child {
+    border-right: none;
+  }
+
+  .gantt-cell.col-merge {
+    background: rgba(139, 92, 246, 0.04);
+  }
+
+  /* Bar */
+  .bar {
+    width: 100%;
+    padding: 6px 8px;
+    border-radius: 8px;
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.4;
+    text-align: center;
+    color: #fff;
+    position: relative;
+    min-height: 38px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .bar-kata {
+    background: linear-gradient(135deg, #dc2626, #ef4444);
+    box-shadow: 0 2px 8px rgba(239,68,68,0.25);
+  }
+
+  .bar-tackle {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    box-shadow: 0 2px 8px rgba(59,130,246,0.25);
+  }
+
+  .bar-chen {
+    background: linear-gradient(135deg, #16a34a, #22c55e);
+    box-shadow: 0 2px 8px rgba(34,197,94,0.25);
+  }
+
+  .bar-all {
+    background: linear-gradient(135deg, #7c3aed, #8b5cf6);
+    box-shadow: 0 2px 8px rgba(139,92,246,0.25);
+  }
+
+  .bar-move {
+    background: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 4px,
+      rgba(255,255,255,0.15) 4px,
+      rgba(255,255,255,0.15) 8px
+    );
+  }
+
+  .bar-kata.bar-move { background-color: #dc2626; }
+  .bar-tackle.bar-move { background-color: #2563eb; }
+  .bar-all.bar-move { background-color: #6d28d9; }
+
+  .bar .sub {
+    font-size: 0.62rem;
+    opacity: 0.85;
+    font-weight: 400;
+    margin-top: 1px;
+  }
+
+  .bar .icon {
+    font-size: 1rem;
+    margin-bottom: 2px;
+  }
+
+  /* Empty / waiting */
+  .bar-empty {
+    width: 100%;
+    height: 38px;
+    border: 2px dashed #cbd5e1;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.68rem;
+    color: #94a3b8;
+  }
+
+  /* Merge star */
+  .merge-star {
+    position: absolute;
+    top: -8px;
+    right: -4px;
+    background: #fbbf24;
+    color: #000;
+    font-size: 0.55rem;
+    font-weight: 800;
+    padding: 2px 6px;
+    border-radius: 8px;
+    z-index: 2;
+  }
+
+  /* City row */
+  .city-row {
+    background: #f8fafc;
+  }
+
+  .city-row .gantt-label {
+    background: #f8fafc;
+    font-size: 0.75rem;
+    color: #64748b;
+    font-weight: 500;
+    min-height: 36px;
+  }
+
+  .city-row .gantt-cell {
+    min-height: 36px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+
+  /* Footer */
+  .footer-notes {
+    margin-top: 24px;
+    padding: 16px 20px;
+    background: #ffffff;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .footer-notes h3 {
+    font-size: 0.8rem;
+    color: #475569;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+
+  .footer-notes ul {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 20px;
+  }
+
+  .footer-notes li {
+    font-size: 0.78rem;
+    color: #64748b;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .footer-notes li::before {
+    content: '⚠️';
+    font-size: 0.7rem;
+  }
+
+  .updated {
+    text-align: right;
+    margin-top: 16px;
+    font-size: 0.7rem;
+    color: #94a3b8;
+  }
+
+  /* Transport detail section */
+  .transport-section {
+    margin-top: 28px;
+  }
+
+  .transport-section h2 {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: #1e293b;
+  }
+
+  .transport-cards {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .transport-card {
+    background: #ffffff;
+    border: 1px solid #e2e8f0;
+    border-radius: 14px;
+    padding: 18px 22px;
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 16px;
+    align-items: start;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+  }
+
+  .transport-card .t-icon {
+    width: 50px; height: 50px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1.5rem;
+    flex-shrink: 0;
+  }
+
+  .t-icon.flight { background: rgba(59,130,246,0.1); }
+  .t-icon.train { background: rgba(234,179,8,0.1); }
+
+  .t-details h3 {
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #1e293b;
+  }
+
+  .t-details .t-date {
+    font-size: 0.72rem;
+    color: #64748b;
+    margin-bottom: 10px;
+  }
+
+  .t-details .t-route {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+  }
+
+  .t-point {
+    text-align: center;
+  }
+
+  .t-point .t-time {
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #1e293b;
+    letter-spacing: 0.02em;
+  }
+
+  .t-point .t-place {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    margin-top: 2px;
+  }
+
+  .t-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    flex: 1;
+    min-width: 60px;
+  }
+
+  .t-arrow .t-line {
+    width: 100%;
+    height: 1px;
+    background: #cbd5e1;
+    position: relative;
+  }
+
+  .t-arrow .t-line::after {
+    content: '▶';
+    position: absolute;
+    right: -2px;
+    top: -7px;
+    font-size: 0.6rem;
+    color: #cbd5e1;
+  }
+
+  .t-arrow .t-dur {
+    font-size: 0.65rem;
+    color: #64748b;
+  }
+
+  .t-options {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+  }
+
+  .t-tag {
+    font-size: 0.68rem;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+  }
+
+  .t-tag.airline { background: rgba(59,130,246,0.1); color: #2563eb; }
+  .t-tag.train-op { background: rgba(234,179,8,0.1); color: #b45309; }
+  .t-tag.price { background: rgba(34,197,94,0.1); color: #16a34a; }
+  .t-tag.lcc { background: rgba(249,115,22,0.1); color: #c2410c; }
+  .t-tag.note { background: rgba(148,163,184,0.08); color: #64748b; }
+  .t-tag.who { background: rgba(139,92,246,0.1); color: #7c3aed; }
+
+  /* Booking links */
+  .t-booking {
+    margin-top: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .t-booking a {
+    font-size: 0.7rem;
+    padding: 5px 12px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: opacity 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .t-booking a:hover { opacity: 0.8; }
+
+  .t-booking .book-primary {
+    background: #3b82f6;
+    color: #fff;
+  }
+
+  .t-booking .book-compare {
+    background: rgba(148,163,184,0.1);
+    color: #64748b;
+    border: 1px solid #e2e8f0;
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+
+  <header>
+    <h1>Europe Trip 2026</h1>
+    <p>トルコ 🇹🇷 → ローマ 🇮🇹 → バルセロナ 🇪🇸 ｜ 2026年 8月7日 〜 16日</p>
+  </header>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot c-kata"></div>キャタ</div>
+    <div class="legend-item"><div class="legend-dot c-tackle"></div>タックル</div>
+    <div class="legend-item"><div class="legend-dot c-chen"></div>チェン</div>
+    <div class="legend-item"><div class="legend-dot c-all"></div>全員</div>
+  </div>
+
+  <div class="gantt-wrapper">
+    <div class="gantt">
+
+      <!-- ===== Header ===== -->
+      <div class="gantt-head">メンバー</div>
+      <div class="gantt-head" style="background:#e0f2fe; color:#0369a1;">8/7<span class="day-name">木 🇹🇷</span></div>
+      <div class="gantt-head" style="background:#e0f2fe; color:#0369a1;">8/8<span class="day-name">金 🇹🇷</span></div>
+      <div class="gantt-head" style="background:#e0f2fe; color:#0369a1;">8/9<span class="day-name">土 🇹🇷</span></div>
+      <div class="gantt-head">8/10<span class="day-name">日</span></div>
+      <div class="gantt-head">8/11<span class="day-name">月</span></div>
+      <div class="gantt-head">8/12<span class="day-name">火</span></div>
+      <div class="gantt-head merge-day">8/13<span class="day-name">水 ⭐合流</span></div>
+      <div class="gantt-head">8/14<span class="day-name">木</span></div>
+      <div class="gantt-head">8/15<span class="day-name">金</span></div>
+      <div class="gantt-head">8/16<span class="day-name">土</span></div>
+
+      <!-- ===== City Row ===== -->
+      <div class="city-row"><div class="gantt-label" style="font-size:0.7rem;">📍 都市</div></div>
+      <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>🇯🇵→✈️🇹🇷</span></div>
+      <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>🇹🇷 カッパドキア</span></div>
+      <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>🇹🇷 イスタンブール</span></div>
+      <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>🇹🇷→🇮🇹 ローマ</span></div>
+      <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>🇮🇹 ローマ</span></div>
+      <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>🇮🇹 ローマ</span></div>
+      <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>✈️🇪🇸 バルセロナ</span></div>
+      <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>🇪🇸 バルセロナ</span></div>
+      <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>🇪🇸→✈️🇰🇷</span></div>
+      <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>🇰🇷→🇯🇵 KIX</span></div>
+
+      <!-- ===== キャタ ===== -->
+      <div class="gantt-label">
+        <div class="avatar c-kata">K</div>
+        キャタ
+      </div>
+      <!-- 8/7 -->
+      <div class="gantt-cell">
+        <div class="bar bar-kata bar-move">
+          <span class="icon">✈️</span>
+          KIX 22:25発
+          <span class="sub">TK87 直行 12h30m</span>
+        </div>
+      </div>
+      <!-- 8/8 -->
+      <div class="gantt-cell">
+        <div class="bar bar-kata">
+          IST 4:55着→国内線
+          <span class="sub">国内線1h20m→観光&泊</span>
+        </div>
+      </div>
+      <!-- 8/9 -->
+      <div class="gantt-cell">
+        <div class="bar bar-kata">
+          早朝気球🎈→IST
+          <span class="sub">国内線1h20m→観光&泊</span>
+        </div>
+      </div>
+      <!-- 8/10 -->
+      <div class="gantt-cell">
+        <div class="bar bar-kata bar-move">
+          <span class="icon">✈️</span>
+          IST→FCO
+          <span class="sub">TK直行 2h40m</span>
+        </div>
+      </div>
+      <!-- 8/11 -->
+      <div class="gantt-cell">
+        <div class="bar bar-kata">
+          ローマ観光
+          <span class="sub">コロッセオ / バチカン</span>
+        </div>
+      </div>
+      <!-- 8/12 -->
+      <div class="gantt-cell">
+        <div class="bar bar-kata">
+          ローマ観光
+          <span class="sub">トレビの泉 / パンテオン等</span>
+        </div>
+      </div>
+      <!-- 8/13 -->
+      <div class="gantt-cell">
+        <div class="bar bar-all bar-move">
+          <span class="icon">✈️</span>
+          08:35→10:25 BCN
+          <span class="sub">FR3181 ¥13,098/人</span>
+        </div>
+      </div>
+      <!-- 8/14 -->
+      <div class="gantt-cell">
+        <div class="bar bar-all">
+          バルセロナ観光
+          <span class="sub">サグラダ・ファミリア等</span>
+        </div>
+      </div>
+      <!-- 8/15 -->
+      <div class="gantt-cell">
+        <div class="bar bar-kata bar-move">
+          <span class="icon">✈️</span>
+          BCN 21:00発
+          <span class="sub">TW408→ソウル ¥177,380/人</span>
+        </div>
+      </div>
+      <!-- 8/16 -->
+      <div class="gantt-cell">
+        <div class="bar bar-kata bar-move">
+          <span class="icon">🏠</span>
+          KIX 20:45着
+          <span class="sub">KE721 ソウル乗継2h20m</span>
+        </div>
+      </div>
+
+      <!-- ===== タックル ===== -->
+      <div class="gantt-label">
+        <div class="avatar c-tackle">T</div>
+        タックル
+      </div>
+      <!-- 8/7 -->
+      <div class="gantt-cell"><div class="bar-empty">—</div></div>
+      <!-- 8/8 -->
+      <div class="gantt-cell"><div class="bar-empty">—</div></div>
+      <!-- 8/9 -->
+      <div class="gantt-cell"><div class="bar-empty">—</div></div>
+      <!-- 8/10 -->
+      <div class="gantt-cell">
+        <div class="bar bar-tackle bar-move">
+          <span class="icon">✈️</span>
+          セントレア発
+          <span class="sub">中国東方→上海→FCO 約17h</span>
+        </div>
+      </div>
+      <!-- 8/11 -->
+      <div class="gantt-cell">
+        <div class="bar bar-tackle">
+          ローマ観光
+          <span class="sub">コロッセオ / バチカン</span>
+        </div>
+      </div>
+      <!-- 8/12 -->
+      <div class="gantt-cell">
+        <div class="bar bar-tackle">
+          ローマ観光
+          <span class="sub">トレビの泉 / パンテオン等</span>
+        </div>
+      </div>
+      <!-- 8/13 -->
+      <div class="gantt-cell">
+        <div class="bar bar-all bar-move">
+          <span class="icon">✈️</span>
+          08:35→10:25 BCN
+          <span class="sub">FR3181 ¥13,098/人</span>
+        </div>
+      </div>
+      <!-- 8/14 -->
+      <div class="gantt-cell">
+        <div class="bar bar-all">
+          バルセロナ観光
+          <span class="sub">サグラダ・ファミリア等</span>
+        </div>
+      </div>
+      <!-- 8/15 -->
+      <div class="gantt-cell">
+        <div class="bar bar-tackle bar-move">
+          <span class="icon">✈️</span>
+          BCN 21:00発
+          <span class="sub">TW408→ソウル ¥177,380/人</span>
+        </div>
+      </div>
+      <!-- 8/16 -->
+      <div class="gantt-cell">
+        <div class="bar bar-tackle bar-move">
+          <span class="icon">🏠</span>
+          KIX 20:45着
+          <span class="sub">KE721 ソウル乗継2h20m</span>
+        </div>
+      </div>
+
+      <!-- ===== チェン ===== -->
+      <div class="gantt-label">
+        <div class="avatar c-chen">C</div>
+        チェン
+      </div>
+      <!-- 8/7 -->
+      <div class="gantt-cell"><div class="bar-empty">—</div></div>
+      <!-- 8/8 -->
+      <div class="gantt-cell"><div class="bar-empty">—</div></div>
+      <!-- 8/9 -->
+      <div class="gantt-cell"><div class="bar-empty">—</div></div>
+      <!-- 8/10 -->
+      <div class="gantt-cell"><div class="bar-empty">—</div></div>
+      <!-- 8/11 -->
+      <div class="gantt-cell"><div class="bar-empty">—</div></div>
+      <!-- 8/12 -->
+      <div class="gantt-cell"><div class="bar-empty">—</div></div>
+      <!-- 8/13 -->
+      <div class="gantt-cell">
+        <div class="bar bar-chen" style="position:relative;">
+          <span class="icon">✈️</span>
+          バルセロナ着
+          <span class="sub">合流</span>
+          <span class="merge-star">⭐ JOIN</span>
+        </div>
+      </div>
+      <!-- 8/14 -->
+      <div class="gantt-cell">
+        <div class="bar bar-all">
+          バルセロナ観光
+          <span class="sub">3人合流</span>
+        </div>
+      </div>
+      <!-- 8/15 -->
+      <div class="gantt-cell">
+        <div class="bar bar-all">
+          バルセロナ観光
+          <span class="sub">3人一緒</span>
+        </div>
+      </div>
+      <!-- 8/16 -->
+      <div class="gantt-cell">
+        <div class="bar-empty">帰国便未定</div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ===== Transport Details ===== -->
+  <div class="transport-section">
+    <h2>✈️🚄 交通手段の詳細</h2>
+    <div class="transport-cards">
+
+      <!-- ===== トルコ区間（キャタのみ）===== -->
+
+      <!-- Turkey 1: Japan → Istanbul (TK87) -->
+      <div class="transport-card" style="border-color:#bae6fd;">
+        <div class="t-icon flight" style="background:rgba(14,165,233,0.1);">✈️</div>
+        <div class="t-details">
+          <h3>① 大阪 → イスタンブール【トルコ航空・直行】</h3>
+          <div class="t-date">8月7日（木）深夜発 ｜ キャタのみ 🇹🇷</div>
+          <div class="t-route">
+            <div class="t-point">
+              <div class="t-time">22:25</div>
+              <div class="t-place">関西 KIX</div>
+            </div>
+            <div class="t-arrow">
+              <div class="t-dur">12h30m</div>
+              <div class="t-line"></div>
+            </div>
+            <div class="t-point">
+              <div class="t-time">04:55+1</div>
+              <div class="t-place">イスタンブール IST</div>
+            </div>
+          </div>
+          <div class="t-options">
+            <span class="t-tag airline">TK87（直行便）</span>
+            <span class="t-tag note">Boeing 787-9 Dreamliner</span>
+            <span class="t-tag price">¥48,000〜55,000/片道</span>
+            <span class="t-tag note">8/8 早朝イスタンブール着</span>
+            <span class="t-tag who">キャタのみ</span>
+          </div>
+          <div class="t-booking">
+            <a href="https://www.turkishairlines.com/ja-jp/" target="_blank" class="book-primary">🔗 トルコ航空 公式</a>
+            <a href="https://www.google.com/travel/flights?q=flights+from+KIX+to+IST+on+2026-08-07" target="_blank" class="book-compare">Google Flights</a>
+            <a href="https://www.skyscanner.net/routes/kix/ista/" target="_blank" class="book-compare">Skyscanner</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Turkey 2: Istanbul → Cappadocia -->
+      <div class="transport-card" style="border-color:#bae6fd;">
+        <div class="t-icon flight" style="background:rgba(14,165,233,0.1);">🇹🇷</div>
+        <div class="t-details">
+          <h3>② イスタンブール → カッパドキア【トルコ国内線】</h3>
+          <div class="t-date">8月8日（金）早朝 ｜ キャタのみ 🇹🇷</div>
+          <div class="t-route">
+            <div class="t-point">
+              <div class="t-time">早朝発</div>
+              <div class="t-place">イスタンブール IST</div>
+            </div>
+            <div class="t-arrow">
+              <div class="t-dur">約1h20m</div>
+              <div class="t-line"></div>
+            </div>
+            <div class="t-point">
+              <div class="t-time">午前着</div>
+              <div class="t-place">カイセリ ASR</div>
+            </div>
+          </div>
+          <div class="t-options">
+            <span class="t-tag airline">Turkish Airlines</span>
+            <span class="t-tag lcc">Pegasus Airlines</span>
+            <span class="t-tag price">$66〜$150</span>
+            <span class="t-tag note">カイセリ(ASR)推奨 — ギョレメまで約1h</span>
+            <span class="t-tag note">ネヴシェヒル(NAV)空港もあり</span>
+            <span class="t-tag who">キャタのみ</span>
+          </div>
+          <div class="t-booking">
+            <a href="https://www.turkishairlines.com/ja-jp/" target="_blank" class="book-primary">🔗 トルコ航空</a>
+            <a href="https://www.flypgs.com/en" target="_blank" class="book-primary">🔗 Pegasus</a>
+            <a href="https://www.google.com/travel/flights?q=flights+from+IST+to+ASR+on+2026-08-08" target="_blank" class="book-compare">Google Flights</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Turkey 3: Cappadocia → Istanbul -->
+      <div class="transport-card" style="border-color:#bae6fd;">
+        <div class="t-icon flight" style="background:rgba(14,165,233,0.1);">🎈</div>
+        <div class="t-details">
+          <h3>③ カッパドキア → イスタンブール【トルコ国内線】</h3>
+          <div class="t-date">8月9日（土）午前〜午後 ｜ キャタのみ 🇹🇷</div>
+          <div class="t-route">
+            <div class="t-point">
+              <div class="t-time">午前〜昼発</div>
+              <div class="t-place">カイセリ ASR</div>
+            </div>
+            <div class="t-arrow">
+              <div class="t-dur">約1h20m</div>
+              <div class="t-line"></div>
+            </div>
+            <div class="t-point">
+              <div class="t-time">午後着</div>
+              <div class="t-place">イスタンブール IST</div>
+            </div>
+          </div>
+          <div class="t-options">
+            <span class="t-tag airline">Turkish Airlines</span>
+            <span class="t-tag lcc">Pegasus Airlines</span>
+            <span class="t-tag price">$66〜$150</span>
+            <span class="t-tag note">🎈 早朝に気球ツアー → 午前便で移動</span>
+            <span class="t-tag note">午後〜夜: イスタンブール観光</span>
+            <span class="t-tag who">キャタのみ</span>
+          </div>
+          <div class="t-booking">
+            <a href="https://www.turkishairlines.com/ja-jp/" target="_blank" class="book-primary">🔗 トルコ航空</a>
+            <a href="https://www.flypgs.com/en" target="_blank" class="book-primary">🔗 Pegasus</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Turkey 4: Istanbul → Rome -->
+      <div class="transport-card" style="border-color:#bae6fd;">
+        <div class="t-icon flight" style="background:rgba(14,165,233,0.1);">✈️</div>
+        <div class="t-details">
+          <h3>④ イスタンブール → ローマ【トルコ航空】</h3>
+          <div class="t-date">8月10日（日）｜ キャタのみ 🇹🇷→🇮🇹</div>
+          <div class="t-route">
+            <div class="t-point">
+              <div class="t-time">午前発</div>
+              <div class="t-place">イスタンブール IST</div>
+            </div>
+            <div class="t-arrow">
+              <div class="t-dur">約2h40m</div>
+              <div class="t-line"></div>
+            </div>
+            <div class="t-point">
+              <div class="t-time">午後着</div>
+              <div class="t-place">ローマ FCO</div>
+            </div>
+          </div>
+          <div class="t-options">
+            <span class="t-tag airline">Turkish Airlines TK1361 等</span>
+            <span class="t-tag price">$73〜$116</span>
+            <span class="t-tag note">1日10便以上運航</span>
+            <span class="t-tag note">※タックルと同日ローマ合流</span>
+            <span class="t-tag who">キャタのみ</span>
+          </div>
+          <div class="t-booking">
+            <a href="https://www.turkishairlines.com/ja-jp/" target="_blank" class="book-primary">🔗 トルコ航空 公式</a>
+            <a href="https://www.google.com/travel/flights?q=flights+from+IST+to+FCO+on+2026-08-10" target="_blank" class="book-compare">Google Flights</a>
+            <a href="https://www.skyscanner.net/routes/ista/rome/" target="_blank" class="book-compare">Skyscanner</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== ヨーロッパ本編 ===== -->
+
+      <!-- Flight 5: Japan → Rome (China Eastern) — タックル -->
+      <div class="transport-card">
+        <div class="t-icon flight">✈️</div>
+        <div class="t-details">
+          <h3>⑤ セントレア → ローマ【中国東方航空・上海経由】</h3>
+          <div class="t-date">8月10日（月）｜ タックル</div>
+          <div class="t-route">
+            <div class="t-point">
+              <div class="t-time">08:00</div>
+              <div class="t-place">セントレア NGO</div>
+            </div>
+            <div class="t-arrow">
+              <div class="t-dur">約2h</div>
+              <div class="t-line"></div>
+            </div>
+            <div class="t-point">
+              <div class="t-time">10:00</div>
+              <div class="t-place">上海浦東 PVG</div>
+            </div>
+            <div class="t-arrow">
+              <div class="t-dur">乗継</div>
+              <div class="t-line"></div>
+            </div>
+            <div class="t-point">
+              <div class="t-time">18:00</div>
+              <div class="t-place">ローマ FCO</div>
+            </div>
+          </div>
+          <div class="t-options">
+            <span class="t-tag airline">中国東方航空（上海経由）</span>
+            <span class="t-tag note">総所要時間 約17h</span>
+            <span class="t-tag note">乗継1回（上海浦東）</span>
+            <span class="t-tag note">※便名・時刻は参考例</span>
+            <span class="t-tag who">タックル</span>
+          </div>
+          <div class="t-booking">
+            <a href="https://www.ceair.com/" target="_blank" class="book-primary">🔗 中国東方航空 公式</a>
+            <a href="https://www.google.com/travel/flights?q=flights+from+NGO+to+FCO+on+2026-08-10" target="_blank" class="book-compare">Google Flights</a>
+            <a href="https://www.skyscanner.net/routes/ngoa/rome/" target="_blank" class="book-compare">Skyscanner</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flight 6: Rome → Barcelona (Ryanair FR3181) -->
+      <div class="transport-card">
+        <div class="t-icon flight">✈️</div>
+        <div class="t-details">
+          <h3>⑥ ローマ → バルセロナ【Ryanair FR3181】</h3>
+          <div class="t-date">8月13日（水）午前 ｜ キャタ & タックル</div>
+          <div class="t-route">
+            <div class="t-point">
+              <div class="t-time">08:35</div>
+              <div class="t-place">ローマ FCO</div>
+            </div>
+            <div class="t-arrow">
+              <div class="t-dur">1h 50m</div>
+              <div class="t-line"></div>
+            </div>
+            <div class="t-point">
+              <div class="t-time">10:25</div>
+              <div class="t-place">バルセロナ BCN</div>
+            </div>
+          </div>
+          <div class="t-options">
+            <span class="t-tag lcc">Ryanair FR3181（直行便）</span>
+            <span class="t-tag price">¥13,098/人（Kiwi実勢価格）</span>
+            <span class="t-tag note">受託手荷物は別料金</span>
+            <span class="t-tag note">代替: Wizz W46019 19:10発 ¥8,501 / AZ76 14:05発 ¥17,219</span>
+            <span class="t-tag who">キャタ & タックル</span>
+          </div>
+          <div class="t-booking">
+            <a href="https://www.ryanair.com/" target="_blank" class="book-primary">🔗 Ryanair 公式</a>
+            <a href="https://www.kiwi.com/en/search/results/rome-italy/barcelona-spain/2026-08-13" target="_blank" class="book-primary">🔗 Kiwi.com</a>
+            <a href="https://www.google.com/travel/flights?q=flights+from+FCO+to+BCN+on+2026-08-13" target="_blank" class="book-compare">Google Flights</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Flight 7: Barcelona → Kansai (Return, T'way+Korean Air via Seoul) -->
+      <div class="transport-card" style="border-color:#e2e8f0;">
+        <div class="t-icon flight">🏠</div>
+        <div class="t-details">
+          <h3>⑦ バルセロナ → 関西【T'way+大韓航空・ソウル経由】</h3>
+          <div class="t-date">8月15日（金）夜発 → 8月16日（土）着 ｜ キャタ & タックル</div>
+          <div class="t-route">
+            <div class="t-point">
+              <div class="t-time">21:00</div>
+              <div class="t-place">バルセロナ BCN</div>
+            </div>
+            <div class="t-arrow">
+              <div class="t-dur">12h25m</div>
+              <div class="t-line"></div>
+            </div>
+            <div class="t-point">
+              <div class="t-time">16:25+1</div>
+              <div class="t-place">ソウル仁川 ICN</div>
+            </div>
+            <div class="t-arrow">
+              <div class="t-dur">乗継 2h20m</div>
+              <div class="t-line"></div>
+            </div>
+            <div class="t-point">
+              <div class="t-time">20:45+1</div>
+              <div class="t-place">関西 KIX</div>
+            </div>
+          </div>
+          <div class="t-options">
+            <span class="t-tag airline">TW408 BCN→ICN（T'way Air）</span>
+            <span class="t-tag airline">KE721 ICN→KIX（大韓航空）</span>
+            <span class="t-tag note">総所要時間 16h45m（乗継2h20m含む）</span>
+            <span class="t-tag price">¥177,380/人（Kiwi実勢価格）</span>
+            <span class="t-tag note">21:00発 → 夕方までバルセロナ観光OK</span>
+            <span class="t-tag note">最安: TW408+KE737 ¥169,641/人（18h40m）</span>
+            <span class="t-tag who">キャタ & タックル</span>
+          </div>
+          <div class="t-booking">
+            <a href="https://www.kiwi.com/en/search/results/barcelona-spain/osaka-kansai-japan/2026-08-15" target="_blank" class="book-primary">🔗 Kiwi.com</a>
+            <a href="https://www.google.com/travel/flights?q=flights+from+BCN+to+KIX+on+2026-08-15" target="_blank" class="book-compare">Google Flights</a>
+            <a href="https://www.skyscanner.net/routes/bcn/kix/" target="_blank" class="book-compare">Skyscanner</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer-notes">
+    <h3>未確定事項</h3>
+    <ul>
+      <li>🇹🇷 TK87（KIX→IST）予約・座席確保</li>
+      <li>🇹🇷 IST↔カッパドキア 国内線の便名・時刻</li>
+      <li>🇹🇷 IST→FCO（8/10）便名・時刻</li>
+      <li>🇹🇷 カッパドキア宿泊先・気球ツアー予約</li>
+      <li>✈️ セントレア→ローマ（中国東方航空）予約</li>
+      <li>✈️ ローマ→バルセロナ Ryanair FR3181 予約（¥13,098/人）</li>
+      <li>✈️ バルセロナ→関西 TW408+KE721 予約（¥177,380/人）</li>
+      <li>ホテル・宿泊先（イスタンブール / ローマ / バルセロナ）</li>
+      <li>チェンのバルセロナ着フライト（8/13）便名・時刻</li>
+      <li>チェンの帰国便</li>
+    </ul>
+  </div>
+
+  <p class="updated">Last updated: 2026-03-22</p>
+
+</div>
+
+</body>
+</html>
