@@ -77,7 +77,7 @@
   .gantt {
     min-width: 800px;
     display: grid;
-    grid-template-columns: 140px repeat(10, 1fr);
+    grid-template-columns: 140px repeat(11, 1fr);
     grid-template-rows: auto;
   }
 
@@ -483,7 +483,7 @@
 
   <header>
     <h1>Europe Trip 2026</h1>
-    <p>トルコ 🇹🇷 → ローマ 🇮🇹 → バルセロナ 🇪🇸 ｜ 2026年 8月7日 〜 16日</p>
+    <p>トルコ 🇹🇷 → ローマ 🇮🇹 → バルセロナ 🇪🇸 ｜ 2026年 8月6日 〜 16日</p>
   </header>
 
   <div class="legend">
@@ -498,20 +498,22 @@
 
       <!-- ===== Header ===== -->
       <div class="gantt-head">メンバー</div>
-      <div class="gantt-head" style="background:#e0f2fe; color:#0369a1;">8/7<span class="day-name">木 🇹🇷</span></div>
-      <div class="gantt-head" style="background:#e0f2fe; color:#0369a1;">8/8<span class="day-name">金 🇹🇷</span></div>
-      <div class="gantt-head" style="background:#e0f2fe; color:#0369a1;">8/9<span class="day-name">土 🇹🇷</span></div>
-      <div class="gantt-head">8/10<span class="day-name">日</span></div>
-      <div class="gantt-head">8/11<span class="day-name">月</span></div>
-      <div class="gantt-head">8/12<span class="day-name">火</span></div>
-      <div class="gantt-head merge-day">8/13<span class="day-name">水 ⭐合流</span></div>
-      <div class="gantt-head">8/14<span class="day-name">木</span></div>
-      <div class="gantt-head">8/15<span class="day-name">金</span></div>
-      <div class="gantt-head">8/16<span class="day-name">土</span></div>
+      <div class="gantt-head" style="background:#e0f2fe; color:#0369a1;">8/6<span class="day-name">木 ✈️</span></div>
+      <div class="gantt-head" style="background:#e0f2fe; color:#0369a1;">8/7<span class="day-name">金 🇹🇷</span></div>
+      <div class="gantt-head" style="background:#e0f2fe; color:#0369a1;">8/8<span class="day-name">土 🇹🇷</span></div>
+      <div class="gantt-head" style="background:#e0f2fe; color:#0369a1;">8/9<span class="day-name">日 🇹🇷</span></div>
+      <div class="gantt-head">8/10<span class="day-name">月</span></div>
+      <div class="gantt-head">8/11<span class="day-name">火</span></div>
+      <div class="gantt-head">8/12<span class="day-name">水</span></div>
+      <div class="gantt-head merge-day">8/13<span class="day-name">木 ⭐合流</span></div>
+      <div class="gantt-head">8/14<span class="day-name">金</span></div>
+      <div class="gantt-head">8/15<span class="day-name">土</span></div>
+      <div class="gantt-head">8/16<span class="day-name">日</span></div>
 
       <!-- ===== City Row ===== -->
       <div class="city-row"><div class="gantt-label" style="font-size:0.7rem;">📍 都市</div></div>
-      <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>🇯🇵→✈️🇹🇷</span></div>
+      <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>🇯🇵→✈️</span></div>
+      <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>🇹🇷 IST着</span></div>
       <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>🇹🇷 カッパドキア</span></div>
       <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>🇹🇷 イスタンブール</span></div>
       <div class="gantt-cell city-row" style="min-height:36px;font-size:0.75rem;"><span>🇹🇷→🇮🇹 ローマ</span></div>
@@ -527,19 +529,27 @@
         <div class="avatar c-kata">K</div>
         キャタ
       </div>
+      <!-- 8/6 -->
+      <div class="gantt-cell">
+        <div class="bar bar-kata bar-move" style="position:relative;">
+          <span class="icon">✈️</span>
+          KIX 16:00発
+          <span class="sub">CZ390 広州経由 21h15m</span>
+          <span class="merge-star" style="background:#22c55e;">✅確定</span>
+        </div>
+      </div>
       <!-- 8/7 -->
       <div class="gantt-cell">
-        <div class="bar bar-kata bar-move">
-          <span class="icon">✈️</span>
-          KIX 22:25発
-          <span class="sub">TK87 直行 12h30m</span>
+        <div class="bar bar-kata">
+          IST 07:15着→国内線
+          <span class="sub">¥85,965 中国南方航空</span>
         </div>
       </div>
       <!-- 8/8 -->
       <div class="gantt-cell">
         <div class="bar bar-kata">
-          IST 4:55着→国内線
-          <span class="sub">国内線1h20m→観光&泊</span>
+          カッパドキア観光
+          <span class="sub">国内線1h25m→観光&泊</span>
         </div>
       </div>
       <!-- 8/9 -->
@@ -591,15 +601,15 @@
         <div class="bar bar-kata bar-move">
           <span class="icon">✈️</span>
           BCN 21:00発
-          <span class="sub">TW408→ソウル ¥177,380/人</span>
+          <span class="sub">TW408→ソウル ¥157,630</span>
         </div>
       </div>
       <!-- 8/16 -->
       <div class="gantt-cell">
         <div class="bar bar-kata bar-move">
           <span class="icon">🏠</span>
-          KIX 20:45着
-          <span class="sub">KE721 ソウル乗継2h20m</span>
+          KIX 22:45着
+          <span class="sub">MM710 ソウル乗継4h30m</span>
         </div>
       </div>
 
@@ -608,6 +618,8 @@
         <div class="avatar c-tackle">T</div>
         タックル
       </div>
+      <!-- 8/6 -->
+      <div class="gantt-cell"><div class="bar-empty">—</div></div>
       <!-- 8/7 -->
       <div class="gantt-cell"><div class="bar-empty">—</div></div>
       <!-- 8/8 -->
@@ -656,15 +668,15 @@
         <div class="bar bar-tackle bar-move">
           <span class="icon">✈️</span>
           BCN 21:00発
-          <span class="sub">TW408→ソウル ¥177,380/人</span>
+          <span class="sub">TW408→ソウル ¥157,630</span>
         </div>
       </div>
       <!-- 8/16 -->
       <div class="gantt-cell">
         <div class="bar bar-tackle bar-move">
           <span class="icon">🏠</span>
-          KIX 20:45着
-          <span class="sub">KE721 ソウル乗継2h20m</span>
+          KIX 22:45着
+          <span class="sub">MM710 ソウル乗継4h30m</span>
         </div>
       </div>
 
@@ -673,6 +685,8 @@
         <div class="avatar c-chen">C</div>
         チェン
       </div>
+      <!-- 8/6 -->
+      <div class="gantt-cell"><div class="bar-empty">—</div></div>
       <!-- 8/7 -->
       <div class="gantt-cell"><div class="bar-empty">—</div></div>
       <!-- 8/8 -->
@@ -723,37 +737,50 @@
 
       <!-- ===== トルコ区間（キャタのみ）===== -->
 
-      <!-- Turkey 1: Japan → Istanbul (TK87) -->
+      <!-- Turkey 1: Japan → Istanbul (China Southern CZ390) -->
       <div class="transport-card" style="border-color:#bae6fd;">
         <div class="t-icon flight" style="background:rgba(14,165,233,0.1);">✈️</div>
         <div class="t-details">
-          <h3>① 大阪 → イスタンブール【トルコ航空・直行】</h3>
-          <div class="t-date">8月7日（木）深夜発 ｜ キャタのみ 🇹🇷</div>
+          <h3>① 大阪 → イスタンブール【中国南方航空・広州経由】</h3>
+          <div class="t-date">8月6日（木）夕方発 ｜ キャタのみ 🇹🇷</div>
           <div class="t-route">
             <div class="t-point">
-              <div class="t-time">22:25</div>
+              <div class="t-time">16:00</div>
               <div class="t-place">関西 KIX</div>
             </div>
             <div class="t-arrow">
-              <div class="t-dur">12h30m</div>
+              <div class="t-dur">4h10m</div>
               <div class="t-line"></div>
             </div>
             <div class="t-point">
-              <div class="t-time">04:55+1</div>
+              <div class="t-time">19:10</div>
+              <div class="t-place">広州 CAN</div>
+            </div>
+            <div class="t-arrow">
+              <div class="t-dur">乗継 6h</div>
+              <div class="t-line"></div>
+            </div>
+            <div class="t-point">
+              <div class="t-time">07:15+1</div>
               <div class="t-place">イスタンブール IST</div>
             </div>
           </div>
           <div class="t-options">
-            <span class="t-tag airline">TK87（直行便）</span>
-            <span class="t-tag note">Boeing 787-9 Dreamliner</span>
-            <span class="t-tag price">¥48,000〜55,000/片道</span>
-            <span class="t-tag note">8/8 早朝イスタンブール着</span>
+            <span class="t-tag airline">CZ390 KIX→CAN + CZ8065 CAN→IST</span>
+            <span class="t-tag note">中国南方航空（広州乗継1回）</span>
+            <span class="t-tag price">¥85,965（Booking.com経由）</span>
+            <span class="t-tag note">総所要時間 21h15m</span>
+            <span class="t-tag note">8/7 朝イスタンブール着</span>
+            <span class="t-tag note">機内持込8kg + 預入23kg×2</span>
             <span class="t-tag who">キャタのみ</span>
+            <span class="t-tag" style="background:rgba(34,197,94,0.15); color:#16a34a; font-weight:700;">✅ 予約確定</span>
+          </div>
+          <div class="t-options" style="margin-top:6px;">
+            <span class="t-tag note">照会番号: 40-928537666</span>
+            <span class="t-tag note">暗証番号: 6449</span>
           </div>
           <div class="t-booking">
-            <a href="https://www.turkishairlines.com/ja-jp/" target="_blank" class="book-primary">🔗 トルコ航空 公式</a>
-            <a href="https://www.google.com/travel/flights?q=flights+from+KIX+to+IST+on+2026-08-07" target="_blank" class="book-compare">Google Flights</a>
-            <a href="https://www.skyscanner.net/routes/kix/ista/" target="_blank" class="book-compare">Skyscanner</a>
+            <a href="https://secure.booking.com/" target="_blank" class="book-primary">🔗 Booking.com 予約管理</a>
           </div>
         </div>
       </div>
@@ -948,8 +975,8 @@
       <div class="transport-card" style="border-color:#e2e8f0;">
         <div class="t-icon flight">🏠</div>
         <div class="t-details">
-          <h3>⑦ バルセロナ → 関西【T'way+大韓航空・ソウル経由】</h3>
-          <div class="t-date">8月15日（金）夜発 → 8月16日（土）着 ｜ キャタ & タックル</div>
+          <h3>⑦ バルセロナ → 関西【T'way+Peach・ソウル経由】</h3>
+          <div class="t-date">8月15日（土）夜発 → 8月16日（日）着 ｜ キャタ & タックル</div>
           <div class="t-route">
             <div class="t-point">
               <div class="t-time">21:00</div>
@@ -964,27 +991,26 @@
               <div class="t-place">ソウル仁川 ICN</div>
             </div>
             <div class="t-arrow">
-              <div class="t-dur">乗継 2h20m</div>
+              <div class="t-dur">乗継 4h30m</div>
               <div class="t-line"></div>
             </div>
             <div class="t-point">
-              <div class="t-time">20:45+1</div>
+              <div class="t-time">22:45+1</div>
               <div class="t-place">関西 KIX</div>
             </div>
           </div>
           <div class="t-options">
             <span class="t-tag airline">TW408 BCN→ICN（T'way Air）</span>
-            <span class="t-tag airline">KE721 ICN→KIX（大韓航空）</span>
-            <span class="t-tag note">総所要時間 16h45m（乗継2h20m含む）</span>
-            <span class="t-tag price">¥177,380/人（Kiwi実勢価格）</span>
+            <span class="t-tag airline">MM710 ICN→KIX（Peach）</span>
+            <span class="t-tag note">総所要時間 18h45m（乗継4h30m含む）</span>
+            <span class="t-tag price">¥157,630/人（Trip.com）</span>
             <span class="t-tag note">21:00発 → 夕方までバルセロナ観光OK</span>
-            <span class="t-tag note">最安: TW408+KE737 ¥169,641/人（18h40m）</span>
+            <span class="t-tag note">⚠️ ご自身で乗り継ぎ（乗り継ぎ保護あり）</span>
             <span class="t-tag who">キャタ & タックル</span>
           </div>
           <div class="t-booking">
-            <a href="https://www.kiwi.com/en/search/results/barcelona-spain/osaka-kansai-japan/2026-08-15" target="_blank" class="book-primary">🔗 Kiwi.com</a>
+            <a href="https://www.trip.com/" target="_blank" class="book-primary">🔗 Trip.com で予約</a>
             <a href="https://www.google.com/travel/flights?q=flights+from+BCN+to+KIX+on+2026-08-15" target="_blank" class="book-compare">Google Flights</a>
-            <a href="https://www.skyscanner.net/routes/bcn/kix/" target="_blank" class="book-compare">Skyscanner</a>
           </div>
         </div>
       </div>
@@ -995,20 +1021,20 @@
   <div class="footer-notes">
     <h3>未確定事項</h3>
     <ul>
-      <li>🇹🇷 TK87（KIX→IST）予約・座席確保</li>
+      <li>✅ KIX→IST 中国南方航空 CZ390+CZ8065 ¥85,965 予約確定（Booking.com / 照会: 40-928537666）</li>
       <li>🇹🇷 IST↔カッパドキア 国内線の便名・時刻</li>
       <li>🇹🇷 IST→FCO（8/10）便名・時刻</li>
       <li>🇹🇷 カッパドキア宿泊先・気球ツアー予約</li>
       <li>✈️ セントレア→ローマ（中国東方航空）予約</li>
       <li>✈️ ローマ→バルセロナ Ryanair FR3181 予約（¥13,098/人）</li>
-      <li>✈️ バルセロナ→関西 TW408+KE721 予約（¥177,380/人）</li>
+      <li>✈️ バルセロナ→関西 TW408+MM710 予約（¥157,630/人 Trip.com）— ご自身で乗継</li>
       <li>ホテル・宿泊先（イスタンブール / ローマ / バルセロナ）</li>
       <li>チェンのバルセロナ着フライト（8/13）便名・時刻</li>
       <li>チェンの帰国便</li>
     </ul>
   </div>
 
-  <p class="updated">Last updated: 2026-03-22</p>
+  <p class="updated">Last updated: 2026-04-02</p>
 
 </div>
 
