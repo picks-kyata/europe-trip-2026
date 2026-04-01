@@ -475,6 +475,244 @@
     color: #64748b;
     border: 1px solid #e2e8f0;
   }
+
+  /* ===== Responsive ===== */
+
+  @media (max-width: 768px) {
+    body {
+      padding: 16px 10px;
+    }
+
+    header h1 {
+      font-size: 1.25rem;
+    }
+
+    header p {
+      font-size: 0.78rem;
+    }
+
+    .legend {
+      gap: 12px;
+    }
+
+    .legend-item {
+      font-size: 0.75rem;
+    }
+
+    /* Gantt: horizontal scroll with hint */
+    .gantt-wrapper {
+      border-radius: 12px;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+    }
+
+    .gantt {
+      min-width: 900px;
+    }
+
+    .gantt-head {
+      padding: 10px 6px;
+      font-size: 0.68rem;
+    }
+
+    .gantt-head .day-name {
+      font-size: 0.58rem;
+    }
+
+    .gantt-label {
+      padding: 0 10px;
+      font-size: 0.78rem;
+      min-height: 60px;
+    }
+
+    .gantt-label .avatar {
+      width: 24px;
+      height: 24px;
+      font-size: 0.55rem;
+    }
+
+    .gantt-cell {
+      padding: 4px 3px;
+      min-height: 60px;
+    }
+
+    .bar {
+      padding: 4px 4px;
+      font-size: 0.65rem;
+      border-radius: 6px;
+      min-height: 32px;
+    }
+
+    .bar .sub {
+      font-size: 0.55rem;
+    }
+
+    .bar .icon {
+      font-size: 0.85rem;
+    }
+
+    .bar-empty {
+      height: 32px;
+      font-size: 0.6rem;
+    }
+
+    .merge-star {
+      font-size: 0.5rem;
+      padding: 1px 4px;
+    }
+
+    .city-row .gantt-cell {
+      font-size: 0.68rem;
+    }
+
+    /* Transport cards */
+    .transport-section h2 {
+      font-size: 0.95rem;
+    }
+
+    .transport-card {
+      grid-template-columns: 40px 1fr;
+      padding: 14px 12px;
+      gap: 10px;
+    }
+
+    .transport-card .t-icon {
+      width: 40px;
+      height: 40px;
+      font-size: 1.2rem;
+      border-radius: 10px;
+    }
+
+    .t-details h3 {
+      font-size: 0.82rem;
+    }
+
+    .t-details .t-date {
+      font-size: 0.68rem;
+    }
+
+    .t-details .t-route {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 0;
+    }
+
+    .t-point {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      text-align: left;
+    }
+
+    .t-point .t-time {
+      font-size: 0.95rem;
+      min-width: 60px;
+    }
+
+    .t-point .t-place {
+      font-size: 0.68rem;
+    }
+
+    .t-arrow {
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      padding: 4px 0 4px 20px;
+      min-width: unset;
+    }
+
+    .t-arrow .t-line {
+      width: 0;
+      height: 20px;
+      border-left: 1px dashed #cbd5e1;
+    }
+
+    .t-arrow .t-line::after {
+      content: '▼';
+      position: absolute;
+      bottom: -7px;
+      left: -5px;
+      top: auto;
+      right: auto;
+      font-size: 0.5rem;
+    }
+
+    .t-arrow .t-dur {
+      font-size: 0.62rem;
+    }
+
+    .t-options {
+      gap: 4px;
+    }
+
+    .t-tag {
+      font-size: 0.62rem;
+      padding: 2px 8px;
+    }
+
+    .t-booking {
+      flex-direction: column;
+    }
+
+    .t-booking a {
+      font-size: 0.68rem;
+      padding: 8px 14px;
+      text-align: center;
+      justify-content: center;
+    }
+
+    /* Footer */
+    .footer-notes {
+      padding: 12px 14px;
+    }
+
+    .footer-notes ul {
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .footer-notes li {
+      font-size: 0.72rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    body {
+      padding: 12px 6px;
+    }
+
+    header h1 {
+      font-size: 1.1rem;
+    }
+
+    .legend {
+      gap: 8px 14px;
+    }
+
+    .legend-item {
+      font-size: 0.7rem;
+    }
+
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+    }
+
+    .transport-card {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .transport-card .t-icon {
+      width: 32px;
+      height: 32px;
+      font-size: 1rem;
+    }
+
+    .t-details h3 {
+      font-size: 0.78rem;
+    }
+  }
 </style>
 </head>
 <body>
